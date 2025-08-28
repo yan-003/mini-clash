@@ -5,7 +5,6 @@ const lanes = document.querySelectorAll(".lane");
 const playerTowers = document.querySelectorAll(".tower.player");
 const enemyTowers = document.querySelectorAll(".tower.enemy");
 
-// Dados das tropas e torres
 const unitsData = {
   soldier: { emoji: "🗡️", speed: 2, hp: 5, attack: 1 },
   archer:  { emoji: "🏹", speed: 3, hp: 3, attack: 1 },
@@ -15,7 +14,7 @@ const unitsData = {
 
 const towerHP = 20;
 
-// Inicializa vida das torres e barras
+// Inicializa torres
 playerTowers.forEach(tower => initTower(tower));
 enemyTowers.forEach(tower => initTower(tower));
 
@@ -25,7 +24,7 @@ function initTower(tower) {
   healthBarFill.style.width = "100%";
 }
 
-// Gera mana com o tempo
+// Mana regen
 setInterval(() => {
   if (mana < maxMana) {
     mana++;
@@ -33,7 +32,6 @@ setInterval(() => {
   }
 }, 1000);
 
-// Controle do botão das cartas para desabilitar se mana insuficiente
 function updateCards() {
   document.querySelectorAll(".card").forEach(button => {
     const cost = parseInt(button.dataset.cost);
@@ -43,7 +41,6 @@ function updateCards() {
 
 setInterval(updateCards, 300);
 
-// Spawn de unidades ao clicar na carta
 document.querySelectorAll(".card").forEach(button => {
   button.addEventListener("click", () => {
     const cost = parseInt(button.dataset.cost);
@@ -62,7 +59,6 @@ document.querySelectorAll(".card").forEach(button => {
 
       spawnUnit(unitType, "player", lane);
 
-      // IA inimiga joga carta após um delay aleatório entre 1.5s e 3s
       setTimeout(() => {
         const laneInimiga = chooseLaneForEnemy();
         spawnUnit(randomUnit(), "enemy", laneInimiga);
@@ -73,7 +69,6 @@ document.querySelectorAll(".card").forEach(button => {
   });
 });
 
-// Spawn de unidades
 function spawnUnit(type, side, laneName) {
   const lane = Array.from(lanes).find(l => l.dataset.lane === laneName);
   const unit = document.createElement("div");
@@ -87,9 +82,9 @@ function spawnUnit(type, side, laneName) {
   unit.dataset.side = side;
   unit.dataset.lane = laneName;
 
-  unit.style.left = side === "player" ? "0px" : "480px";
+  // Posiciona verticalmente: jogadores começam no topo (y=0), inimigos no final (y=420)
+  unit.style.top = side === "player" ? "0px" : "420px";
 
-  // Barra de vida visível
   const healthBar = document.createElement("div");
   healthBar.classList.add("health-bar");
   const healthBarFill = document.createElement("div");
@@ -102,11 +97,10 @@ function spawnUnit(type, side, laneName) {
   animateUnit(unit, side, lane);
 }
 
-// Animação + colisão + ataque
 function animateUnit(unit, side, lane) {
-  let position = parseInt(unit.style.left);
+  let position = parseInt(unit.style.top);
   const speed = parseFloat(unit.dataset.speed);
-  const direction = side === "player" ? 1 : -1;
+  const direction = side === "player" ? 1 : -1; // Player desce, inimigo sobe
 
   const move = setInterval(() => {
     if (!unit.parentElement) {
@@ -114,11 +108,11 @@ function animateUnit(unit, side, lane) {
       return;
     }
 
-    // Procurar inimigos na lane perto pra atacar
+    // Procura unidades inimigas próximas na lane
     const opponents = Array.from(lane.querySelectorAll(`.unit.${side === "player" ? "enemy" : "player"}`));
 
     const collided = opponents.find(op => {
-      const opPos = parseInt(op.style.left);
+      const opPos = parseInt(op.style.top);
       return Math.abs(opPos - position) < 30;
     });
 
@@ -129,7 +123,7 @@ function animateUnit(unit, side, lane) {
     }
 
     // Se chegou perto da torre inimiga, atacar torre
-    if ((side === "player" && position >= 470) || (side === "enemy" && position <= 10)) {
+    if ((side === "player" && position >= 420) || (side === "enemy" && position <= 0)) {
       clearInterval(move);
       const tower = getTowerAtLane(side === "player" ? "enemy" : "player", unit.dataset.lane);
       if (tower) {
@@ -141,12 +135,11 @@ function animateUnit(unit, side, lane) {
     }
 
     position += direction * speed;
-    unit.style.left = `${position}px`;
+    unit.style.top = position + "px";
 
   }, 30);
 }
 
-// Função para pegar torre na lane e lado
 function getTowerAtLane(side, laneName) {
   const towers = side === "player" ? playerTowers : enemyTowers;
   for (const t of towers) {
@@ -155,7 +148,6 @@ function getTowerAtLane(side, laneName) {
   return null;
 }
 
-// Luta entre duas unidades
 function fight(unitA, unitB, lane) {
   const hpA = parseInt(unitA.dataset.hp) - parseInt(unitB.dataset.attack);
   const hpB = parseInt(unitB.dataset.hp) - parseInt(unitA.dataset.attack);
@@ -177,7 +169,6 @@ function fight(unitA, unitB, lane) {
   }
 }
 
-// Atualiza barra de vida da unidade
 function updateHealthBar(unit) {
   const hp = parseInt(unit.dataset.hp);
   const maxHp = unitsData[unit.dataset.type].hp;
@@ -186,7 +177,6 @@ function updateHealthBar(unit) {
   if (barFill) barFill.style.width = percent + "%";
 }
 
-// Ataque de unidade na torre
 function attackTower(unit, tower, lane) {
   const attackPower = parseInt(unit.dataset.attack);
 
@@ -199,7 +189,6 @@ function attackTower(unit, tower, lane) {
     alert(`${unit.dataset.side === "player" ? "Você" : "Inimigo"} venceu a torre ${tower.dataset.lane}!`);
     tower.remove();
   } else {
-    // Continua atacando a cada 1 segundo enquanto unidade e torre existirem
     setTimeout(() => {
       if (unit.parentElement && tower.parentElement) {
         attackTower(unit, tower, lane);
@@ -208,7 +197,6 @@ function attackTower(unit, tower, lane) {
   }
 }
 
-// Atualiza barra de vida da torre
 function updateTowerHealthBar(tower) {
   const hp = parseInt(tower.dataset.hp);
   const percent = Math.max(0, (hp / towerHP) * 100);
@@ -216,7 +204,6 @@ function updateTowerHealthBar(tower) {
   if (barFill) barFill.style.width = percent + "%";
 }
 
-// IA inimiga escolhe lane com menos tropas do jogador
 function chooseLaneForEnemy() {
   let minCount = Infinity;
   let chosenLane = "mid";
@@ -232,9 +219,7 @@ function chooseLaneForEnemy() {
   return chosenLane;
 }
 
-// Escolhe uma tropa aleatória para o inimigo
 function randomUnit() {
   const keys = Object.keys(unitsData);
   return keys[Math.floor(Math.random() * keys.length)];
 }
-
