@@ -8,25 +8,59 @@ body {
 
 .arena {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background: #a3d5ff;
-  padding: 40px 20px;
+  gap: 10px;
+}
+
+.towers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 300px;
 }
 
 .tower {
-  font-size: 40px;
-  width: 80px;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #aaa;
+  border-radius: 5px;
 }
 
 #battlefield {
-  flex-grow: 1;
-  height: 100px;
-  background: #fff;
-  position: relative;
-  margin: 0 20px;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
   border: 2px solid #000;
+  position: relative;
+}
+
+.lane {
+  position: relative;
+  height: 100px;
+  border-top: 1px solid #ccc;
+}
+
+.unit {
+  position: absolute;
+  font-size: 24px;
+  bottom: 10px;
+}
+
+.unit.player {
+  color: blue;
+}
+
+.unit.enemy {
+  color: red;
 }
 
 .card-bar {
@@ -39,8 +73,7 @@ body {
   font-size: 16px;
 }
 
-.unit {
-  position: absolute;
-  bottom: 10px;
-  font-size: 24px;
+.mana-bar {
+  margin-top: 15px;
+  font-weight: bold;
 }
