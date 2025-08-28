@@ -91,3 +91,8 @@ h1 {
   width: 100%;
   transition: width 0.2s ease-out;
 }
+
+.mana-bar {
+  margin-top: 20px;
+  font-size: 20px;
+}
