@@ -2,15 +2,30 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Mini Clash</title>
+  <title>Mini Clash 3 Lanes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Mini Clash</h1>
+  <h1>Mini Clash Royale Simples</h1>
+
   <div class="arena">
-    <div id="player-tower" class="tower">🏰</div>
-    <div id="battlefield"></div>
-    <div id="enemy-tower" class="tower">👹</div>
+    <div class="towers enemy">
+      <div class="tower" data-lane="top">👹</div>
+      <div class="tower" data-lane="mid">👹</div>
+      <div class="tower" data-lane="bot">👹</div>
+    </div>
+
+    <div id="battlefield">
+      <div class="lane" data-lane="top"></div>
+      <div class="lane" data-lane="mid"></div>
+      <div class="lane" data-lane="bot"></div>
+    </div>
+
+    <div class="towers player">
+      <div class="tower" data-lane="top">🏰</div>
+      <div class="tower" data-lane="mid">🏰</div>
+      <div class="tower" data-lane="bot">🏰</div>
+    </div>
   </div>
 
   <div class="mana-bar">
