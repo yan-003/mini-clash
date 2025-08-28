@@ -2,59 +2,22 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Mini Clash Royale Vertical</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Clash Royale</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Mini Clash Royale Vertical</h1>
+  <h1>Mini Clash Royale</h1>
 
-  <div class="arena">
-    <div class="towers enemy">
-      <div class="tower enemy" data-lane="top">
-        👹
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-      <div class="tower enemy" data-lane="mid">
-        👹
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-      <div class="tower enemy" data-lane="bot">
-        👹
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div id="battlefield">
-      <div class="lane" data-lane="top"></div>
-      <div class="lane" data-lane="mid"></div>
-      <div class="lane" data-lane="bot"></div>
-    </div>
-
-    <div class="towers player">
-      <div class="tower player" data-lane="top">
-        🏰
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-      <div class="tower player" data-lane="mid">
-        🏰
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-      <div class="tower player" data-lane="bot">
-        🏰
-        <div class="health-bar"><div class="health-bar-fill"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mana-bar">
-    Mana: <span id="mana-count">0</span>/10
+  <div class="arena" id="arena">
+    <!-- Arena onde as tropas vão ser soltas -->
   </div>
 
   <div class="card-bar">
-    <button class="card" data-cost="3" data-unit="soldier">🗡️ Soldado (3)</button>
-    <button class="card" data-cost="2" data-unit="archer">🏹 Arqueiro (2)</button>
-    <button class="card" data-cost="5" data-unit="tank">🛡️ Tanque (5)</button>
-    <button class="card" data-cost="4" data-unit="mage">🔥 Mago (4)</button>
+    <button class="card" data-cost="3" data-unit="soldier" draggable="true">🗡️ Soldado (3)</button>
+    <button class="card" data-cost="2" data-unit="archer" draggable="true">🏹 Arqueiro (2)</button>
+    <button class="card" data-cost="5" data-unit="tank" draggable="true">🛡️ Tanque (5)</button>
+    <button class="card" data-cost="4" data-unit="mage" draggable="true">🔥 Mago (4)</button>
   </div>
 
   <script src="game.js"></script>
