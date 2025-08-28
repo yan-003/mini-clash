@@ -216,4 +216,25 @@ function updateTowerHealthBar(tower) {
   if (barFill) barFill.style.width = percent + "%";
 }
 
-// IA inimiga
+// IA inimiga escolhe lane com menos tropas do jogador
+function chooseLaneForEnemy() {
+  let minCount = Infinity;
+  let chosenLane = "mid";
+
+  ["top", "mid", "bot"].forEach(lane => {
+    const playerUnits = document.querySelectorAll(`.lane[data-lane="${lane}"] .unit.player`);
+    if (playerUnits.length < minCount) {
+      minCount = playerUnits.length;
+      chosenLane = lane;
+    }
+  });
+
+  return chosenLane;
+}
+
+// Escolhe uma tropa aleatória para o inimigo
+function randomUnit() {
+  const keys = Object.keys(unitsData);
+  return keys[Math.floor(Math.random() * keys.length)];
+}
+
