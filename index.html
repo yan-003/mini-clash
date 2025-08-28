@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Clash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Mini Clash</h1>
+  <div class="arena">
+    <div id="player-tower" class="tower">🏰</div>
+    <div id="battlefield"></div>
+    <div id="enemy-tower" class="tower">👹</div>
+  </div>
+
+  <div class="mana-bar">
+    Mana: <span id="mana-count">0</span>/10
+  </div>
+
+  <div class="card-bar">
+    <button class="card" data-cost="3" data-unit="soldier">🗡️ Soldado (3)</button>
+    <button class="card" data-cost="2" data-unit="archer">🏹 Arqueiro (2)</button>
+    <button class="card" data-cost="5" data-unit="tank">🛡️ Tanque (5)</button>
+    <button class="card" data-cost="4" data-unit="mage">🔥 Mago (4)</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
